@@ -1,0 +1,177 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "IMB Products",
+    "description": "Documentation from IMB Products API",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/api/products": {
+      "get": {
+        "tags": ["Products"],
+        "description": "Retrieve registered products",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "developer",
+            "type": "string",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "scrumMasterName",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Connection Failed"
+          }
+        }
+      }
+    },
+    "/api/product": {
+      "post": {
+        "tags": ["Products"],
+        "description": "Insert a new Product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productName": {
+                    "type": "string"
+                  },
+                  "productOwnerName": {
+                    "type": "string"
+                  },
+                  "Developers": {
+                    "type": "array",
+                    "minLength": 1,
+                    "maxLength": 5,
+                    "items": { "type": "string" }
+                  },
+                  "scrumMasterName": {
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "type": "string"
+                  },
+                  "methodology": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product Created. Returns the new product"
+          },
+          "422": {
+            "description": "It is not possible to create the product. All fields are required"
+          },
+          "500": {
+            "description": "Connection Failed"
+          }
+        }
+      }
+    },
+    "/api/product/{productId}": {
+      "get": {
+        "tags": ["Products"],
+        "description": "Retrieve a specific product by its ID (productId)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "description": "Product ID or Product Number",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Return a product object"
+          },
+          "404": {
+            "description": "Specified Product Id not found"
+          },
+          "500": {
+            "description": "Connection Failed"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Products"],
+        "description": "Update all fields of a specific product by its ID (productId)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "description": "Product ID or Product Number",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productName": {
+                    "type": "string"
+                  },
+                  "productOwnerName": {
+                    "type": "string"
+                  },
+                  "Developers": {
+                    "type": "array",
+                    "minLength": 1,
+                    "maxLength": 5,
+                    "items": { "type": "string" }
+                  },
+                  "scrumMasterName": {
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "type": "string"
+                  },
+                  "methodology": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK. Return the product object updated"
+          },
+          "404": {
+            "description": "Specified Product Id not found"
+          },
+          "422": {
+            "description": "It is not possible to update the product. All fields are required"
+          },
+          "500": {
+            "description": "Connection Failed"
+          }
+        }
+      }
+    }
+  }
+}
